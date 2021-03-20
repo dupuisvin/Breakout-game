@@ -7,6 +7,7 @@
 #include "QuitEvent.h"
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <stdexcept>
 #include <string>
 
@@ -40,6 +41,8 @@ GameSDL::GameSDL(const std::string &windowName) :
 		Window.Init();
 		if(TTF_Init() != 0)
 			throw std::runtime_error("SDL could not intialize TTF; SDL_Error: % s\n"s + std::string(SDL_GetError()));
+		if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) != 0)
+			throw std::runtime_error("SDL could not intialize Mixer; SDL_Error: % s\n"s + std::string(SDL_GetError()));
 		SDL_AddEventWatch(resizeEventWatch, &Window);
 	}
 	else
@@ -48,6 +51,8 @@ GameSDL::GameSDL(const std::string &windowName) :
 
 GameSDL::~GameSDL()
 {
+	Registry.clear();
+	Mix_Quit();
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();

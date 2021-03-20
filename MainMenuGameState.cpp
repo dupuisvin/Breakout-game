@@ -1,5 +1,6 @@
 #include "MainMenuGameState.h"
 
+#include "ButtonClickedEvent.h"
 #include "MouseEvents.h"
 #include "RenderWindow.h"
 #include "TextureLoader.h"
@@ -16,9 +17,11 @@ using namespace Breakout;
 
 static constexpr char DEFAULT_BACKGROUND_TEXTURE[] = "Assets/Graphics/Background/bg_grasslands.png";
 static constexpr char DEFAULT_FONT[] = "Assets/Fonts/Kenney_Rocket.ttf";
+static constexpr char MENU_MUSIC[] = "Assets/Music/01 sawsquarenoise - Tittle Screen.mp3";
 
 MainMenuGameState::MainMenuGameState(entt::registry& reg, entt::dispatcher& dispatcher) :
     GameState(reg, dispatcher),
+    SoundSys(reg, dispatcher),
     StartButton("Start", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2),
     OptionsButton("Options", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 60),
     ExitButton("Exit", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 120)
@@ -81,15 +84,18 @@ void MainMenuGameState::HandleMouseButtonUp(const MouseButtonUpEvent& event)
             if(IsButtonClicked(Registry, StartButton.GetButtonEntity(), event))
             {
                 printf("Start Clicked\n");
+                Dispatcher.trigger<ButtonClickedEvent>();
                 Dispatcher.trigger<StartGameEvent>();
             }
             else if (IsButtonClicked(Registry, OptionsButton.GetButtonEntity(), event))
             {
                 printf("Options clicked\n");
+                Dispatcher.trigger<ButtonClickedEvent>();
             }
             else if (IsButtonClicked(Registry, ExitButton.GetButtonEntity(), event))
             {
                 printf("Exit clicked\n");
+                Dispatcher.trigger<ButtonClickedEvent>();
                 Dispatcher.trigger<QuitEvent>();
             }
         }
@@ -109,6 +115,7 @@ void MainMenuGameState::Init(RenderWindow& window)
     ExitButton.Load(Registry, window, 1);
 
     Renderer.Init(window);
+    SoundSys.Init(MENU_MUSIC);
 
     ConnectEvents();
 }
@@ -128,6 +135,7 @@ void MainMenuGameState::Uninit()
     ExitButton.Unload(Registry);
 
     DisconnectEvents();
+    SoundSys.Uninit();
 }
 
 void MainMenuGameState::Update(float nStep)

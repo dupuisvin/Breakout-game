@@ -73,6 +73,9 @@ LevelBreakout LevelLoader::LoadLevel(std::string filename, entt::registry& reg, 
 			reg.emplace<Ball>(ret.BallEntity);
 			reg.emplace<Active>(ret.BallEntity);
 
+			const auto& music = doc["music"];
+			ret.LevelMusicPath = music.GetString();
+
 			const rapidjson::Value& bricks = doc["bricks"];
 			ret.BricksEntities.reserve(bricks.Size());
 			for (rapidjson::Value::ConstValueIterator itr = bricks.Begin(); itr != bricks.End(); ++itr)

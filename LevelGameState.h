@@ -6,6 +6,7 @@
 #include "RenderSystem.h"
 #include "MoveSystem.h"
 #include "CollisionSystem.h"
+#include "LevelSoundSystem.h"
 
 namespace SDLEngine
 {
@@ -44,6 +45,7 @@ namespace Breakout
     private:
 
         void BrickDestroyed();
+        void ResetBallPaddle();
         void HandleKeyboardEvents(const SDLEngine::KeyDownEvent &event);
 
         std::string LevelAssetPath;
@@ -51,6 +53,7 @@ namespace Breakout
         SDLEngine::RenderSystem Renderer;
         MoveSystem MoveSys;
         CollisionSystem CollisionSys;
+        LevelSoundSystem SoundSys;
         size_t BrickCount = 0;
 
     };

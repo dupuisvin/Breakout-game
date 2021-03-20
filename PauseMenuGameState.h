@@ -3,6 +3,7 @@
 
 #include "GameState.h"
 #include "RenderSystem.h"
+#include "MenuSoundSystem.h"
 #include "TextButton.h"
 
 namespace SDLEngine
@@ -47,8 +48,9 @@ namespace Breakout
         void HandleKeyboardEvent(const SDLEngine::KeyDownEvent& event);
 
         SDLEngine::RenderSystem Renderer;
+        MenuSoundSystem SoundSys;
         SDLEngine::TextButton ExitToMenuButton;
-        entt::entity PauseText;
+        entt::entity PauseText = entt::null;
     };
 }
 

@@ -155,14 +155,19 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BallHitWallEvent.h" />
     <ClCompile Include="BreakoutGame.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="LevelBreakout.h" />
     <ClCompile Include="LevelGameState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="MenuSoundSystem.cpp" />
+    <ClCompile Include="MenuSoundSystem.h" />
     <ClCompile Include="MoveSystem.cpp" />
     <ClCompile Include="OptionsGameState.cpp" />
     <ClCompile Include="PauseMenuGameState.cpp" />
+    <ClCompile Include="LevelSoundSystem.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="GameSDL.cpp" />
     <ClCompile Include="main.cpp" />
@@ -174,9 +179,13 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
   <ItemGroup>
     <ClInclude Include="Active.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallDestroyedEvent.h" />
+    <ClInclude Include="BallHitBrickEvent.h" />
+    <ClInclude Include="BallHitPaddleEvent.h" />
     <ClInclude Include="BreakoutGame.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickDestroyedEvent.h" />
+    <ClInclude Include="ButtonClickedEvent.h" />
     <ClInclude Include="CollisionAABB.h" />
     <ClInclude Include="CollisionCircle.h" />
     <ClInclude Include="CollisionContact.h" />
@@ -185,11 +194,15 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
     <ClInclude Include="LevelGameState.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MoveSystem.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="OptionsGameState.h" />
     <ClInclude Include="PaddleCollisionObj.h" />
     <ClInclude Include="PauseMenuGameState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuitEvent.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="LevelSoundSystem.h" />
+    <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="CollisionUtils.h" />
     <ClInclude Include="GameSDL.h" />

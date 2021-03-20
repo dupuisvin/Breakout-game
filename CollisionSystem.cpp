@@ -7,7 +7,12 @@
 #include "Player.h"
 #include "CollisionUtils.h"
 #include "Active.h"
+#include "RenderWindow.h"
 #include "BrickDestroyedEvent.h"
+#include "BallHitBrickEvent.h"
+#include "BallHitPaddleEvent.h"
+#include "BallDestroyedEvent.h"
+#include "BallHitWallEvent.h"
 #include "PaddleCollisionObj.h"
 #include <glm/geometric.hpp>
 
@@ -54,6 +59,7 @@ static void CollideWithBricks(BrickView &brickView, entt::registry& reg, entt::d
             ball.Vel.y *= -1;
 
         reg.remove<Active>(minEntity);
+        dispatch.trigger<BallHitBrickEvent>();
         dispatch.trigger<BrickDestroyedEvent>();
     }
 }
@@ -74,6 +80,7 @@ void CollideWithPaddles(PaddleView &paddleView, entt::registry& reg, entt::dispa
                     ball.Vel.x *= -1;
                 else if (contactCenter.CollVec.y != 0.0f)
                     ball.Vel.y *= -1;
+                dispatch.trigger<BallHitPaddleEvent>();
             }
             else
             {
@@ -83,6 +90,7 @@ void CollideWithPaddles(PaddleView &paddleView, entt::registry& reg, entt::dispa
                 {
                     ballPos.Pos += contactLeft.CollVec;
                     ball.Vel = glm::normalize(contactLeft.CollVec) * glm::length(ball.Vel);;
+                    dispatch.trigger<BallHitPaddleEvent>();
                 }
                 else
                 {
@@ -92,10 +100,40 @@ void CollideWithPaddles(PaddleView &paddleView, entt::registry& reg, entt::dispa
                     {
                         ballPos.Pos += contactRight.CollVec;
                         ball.Vel = glm::normalize(contactRight.CollVec) * glm::length(ball.Vel);
+                        dispatch.trigger<BallHitPaddleEvent>();
                     }
                 }
             }
         });
+}
+
+static void CollideWithWalls(entt::dispatcher& dispatch, Ball &ball, Position &pos, CollisionCircle& ballColl)
+{
+    if (pos.Pos.x <= 0.0f)
+    {
+        pos.Pos.x = 0.0f;
+        ball.Vel.x *= -1.0f;
+        dispatch.trigger<BallHitWallEvent>();
+    }
+    else if (pos.Pos.x >= RenderWindow::DEFAULT_SCREEN_WIDTH - (ballColl.Radius*2.0f))
+    {
+        pos.Pos.x = RenderWindow::DEFAULT_SCREEN_WIDTH - (ballColl.Radius * 2.0f);
+        ball.Vel.x *= -1.0f;
+        dispatch.trigger<BallHitWallEvent>();
+    }
+    else if (pos.Pos.y <= 0)
+    {
+        pos.Pos.y = 0.0f;
+        ball.Vel.y *= -1.0f;
+        dispatch.trigger<BallHitWallEvent>();
+    }
+    else if (pos.Pos.y >= RenderWindow::DEFAULT_SCREEN_HEIGHT - (ballColl.Radius * 2.0f))
+    {
+        //pos.Pos = { (RenderWindow::DEFAULT_SCREEN_WIDTH - (ballColl.Radius * 2.0f)) / 2, paddlePos.y - (ballColl.Radius*2.0f) };
+        ball.Vel.x = 0.0f;
+        ball.Vel.y = 0.0f;
+        dispatch.trigger<BallDestroyedEvent>();
+    }
 }
 
 void CollisionSystem::Update(float nStep, entt::registry& reg, entt::dispatcher& dispatch)
@@ -108,5 +146,6 @@ void CollisionSystem::Update(float nStep, entt::registry& reg, entt::dispatcher&
         {
             CollideWithBricks(brickView, reg, dispatch, ball, ballPos, ballColl);
             CollideWithPaddles(paddleView, reg, dispatch, ball, ballPos, ballColl);
+            CollideWithWalls(dispatch, ball, ballPos, ballColl);
         });
 }

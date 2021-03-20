@@ -14,6 +14,7 @@ namespace Breakout
         entt::entity BackgroundEntity;
         entt::entity PaddleEntity;
         entt::entity BallEntity;
+        std::string LevelMusicPath;
 
         //Unload the entities from the registry
         void Unload(entt::registry& reg)

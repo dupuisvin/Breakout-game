@@ -73,27 +73,5 @@ void MoveSystem::Update(float nStep, entt::registry& reg)
                 StartBall = false;
             }
             pos.Pos += glm::vec2(nStep, nStep)*ball.Vel;
-
-            if (pos.Pos.x <= 0.0f)
-            {
-                pos.Pos.x = 0.0f;
-                ball.Vel.x *= -1.0f;
-            }
-            else if (pos.Pos.x >= RenderWindow::DEFAULT_SCREEN_WIDTH-(float)sprite.Rect.w)
-            {
-                pos.Pos.x = RenderWindow::DEFAULT_SCREEN_WIDTH - (float)sprite.Rect.w;
-                ball.Vel.x *= -1.0f;
-            }
-            else if (pos.Pos.y <= 0)
-            {
-                pos.Pos.y = 0.0f;
-                ball.Vel.y *= -1.0f;
-            }
-            else if (pos.Pos.y >= RenderWindow::DEFAULT_SCREEN_HEIGHT - (float)sprite.Rect.h)
-            {
-                pos.Pos = { (RenderWindow::DEFAULT_SCREEN_WIDTH - sprite.Rect.w) / 2, paddlePos.y - sprite.Rect.h };
-                ball.Vel.x = 0.0f;
-                ball.Vel.y = 0.0f;
-            }
         });
 }

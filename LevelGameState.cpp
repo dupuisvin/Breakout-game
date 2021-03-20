@@ -9,6 +9,7 @@
 #include "GameStatesEvents.h"
 #include "Brick.h"
 #include "BrickDestroyedEvent.h"
+#include "BallDestroyedEvent.h"
 #include "Active.h"
 
 #include <entt/entt.hpp>
@@ -16,12 +17,10 @@
 using namespace SDLEngine;
 using namespace Breakout;
 
-//@temp
-#include <stdexcept>
-
 LevelGameState::LevelGameState(std::string levelPath, entt::registry& reg, entt::dispatcher& dispatcher) :
     GameState(reg, dispatcher),
-    LevelAssetPath(levelPath)
+    LevelAssetPath(levelPath),
+    SoundSys(reg, dispatcher)
 {
 }
 
@@ -38,6 +37,7 @@ void LevelGameState::ConnectEvents()
     Dispatcher.sink<KeyUpEvent>().connect<&MoveSystem::OnKeyUp>(&MoveSys);
     Dispatcher.sink<KeyDownEvent>().connect<&LevelGameState::HandleKeyboardEvents>(this);
     Dispatcher.sink<BrickDestroyedEvent>().connect<&LevelGameState::BrickDestroyed>(this);
+    Dispatcher.sink<BallDestroyedEvent>().connect<&LevelGameState::ResetBallPaddle>(this);
 }
 
 void LevelGameState::DisconnectEvents()
@@ -45,6 +45,8 @@ void LevelGameState::DisconnectEvents()
     Dispatcher.sink<KeyDownEvent>().disconnect<&MoveSystem::OnKeyDown>(&MoveSys);
     Dispatcher.sink<KeyUpEvent>().disconnect<&MoveSystem::OnKeyUp>(&MoveSys);
     Dispatcher.sink<KeyDownEvent>().disconnect<&LevelGameState::HandleKeyboardEvents>(this);
+    Dispatcher.sink<BrickDestroyedEvent>().disconnect<&LevelGameState::BrickDestroyed>(this);
+    Dispatcher.sink<BallDestroyedEvent>().disconnect<&LevelGameState::ResetBallPaddle>(this);
 }
 
 static bool IsButtonClicked(entt::registry& reg, entt::entity buttonEntity, const MouseButtonUpEvent& event)
@@ -84,14 +86,9 @@ void LevelGameState::Init(RenderWindow& window)
     BrickCount = LevelEntities.BricksEntities.size();
 
     Renderer.Init(window);
+    SoundSys.Init(LevelEntities.LevelMusicPath);
 
-    //Set paddle position to starting position
-    auto [paddlePos, paddleSprite] = Registry.get<Position, Sprite>(LevelEntities.PaddleEntity);
-    paddlePos.Pos = { (window.GetWidth() - paddleSprite.Rect.w) / 2, window.GetHeight() - paddleSprite.Rect.h * 2 };
-
-    //Set ball position to starting position
-    auto [ballPos, ballSprite] = Registry.get<Position, Sprite>(LevelEntities.BallEntity);
-    ballPos.Pos = { (window.GetWidth() - ballSprite.Rect.w) / 2, paddlePos.Pos.y - ballSprite.Rect.h };
+    ResetBallPaddle();
 
     ConnectEvents();
 }
@@ -101,10 +98,22 @@ void LevelGameState::Render(RenderWindow& window)
     Renderer.Render(Registry, window);
 }
 
+void LevelGameState::ResetBallPaddle()
+{
+    //Set paddle position to starting position
+    auto [paddlePos, paddleSprite] = Registry.get<Position, Sprite>(LevelEntities.PaddleEntity);
+    paddlePos.Pos = { (RenderWindow::DEFAULT_SCREEN_WIDTH - paddleSprite.Rect.w) / 2, RenderWindow::DEFAULT_SCREEN_HEIGHT - paddleSprite.Rect.h * 2 };
+
+    //Set ball position to starting position
+    auto [ballPos, ballSprite] = Registry.get<Position, Sprite>(LevelEntities.BallEntity);
+    ballPos.Pos = { (RenderWindow::DEFAULT_SCREEN_WIDTH - ballSprite.Rect.w) / 2, paddlePos.Pos.y - ballSprite.Rect.h };
+}
+
 void LevelGameState::Uninit()
 {
     LevelEntities.Unload(Registry);
     DisconnectEvents();
+    SoundSys.Uninit();
 }
 
 void LevelGameState::Update(float nStep)

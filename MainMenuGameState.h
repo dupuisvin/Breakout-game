@@ -4,6 +4,7 @@
 #include "GameState.h"
 #include "RenderSystem.h"
 #include "TextButton.h"
+#include "MenuSoundSystem.h"
 
 namespace SDLEngine
 {
@@ -47,6 +48,7 @@ namespace Breakout
         void HandleMouseButtonUp(const SDLEngine::MouseButtonUpEvent& event);
 
         SDLEngine::RenderSystem Renderer;
+        MenuSoundSystem SoundSys;
         SDLEngine::TextButton StartButton;
         SDLEngine::TextButton OptionsButton;
         SDLEngine::TextButton ExitButton;

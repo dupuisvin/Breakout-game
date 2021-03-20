@@ -1,6 +1,7 @@
 #include "PauseMenuGameState.h"
 
 #include "MouseEvents.h"
+#include "ButtonClickedEvent.h"
 #include "KeyboardEvents.h"
 #include "RenderWindow.h"
 #include "TextureLoader.h"
@@ -20,6 +21,7 @@ static constexpr char DEFAULT_FONT[] = "Assets/Fonts/Kenney_Rocket.ttf";
 
 PauseMenuGameState::PauseMenuGameState(entt::registry& reg, entt::dispatcher& dispatcher) :
     GameState(reg, dispatcher),
+    SoundSys(reg, dispatcher),
     ExitToMenuButton("Exit to menu", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2)
 {
 }
@@ -73,8 +75,11 @@ void PauseMenuGameState::HandleMouseButtonUp(const MouseButtonUpEvent& event)
     {
     case SDL_BUTTON_LEFT:
         {
-            if(IsButtonClicked(Registry, ExitToMenuButton.GetButtonEntity(), event))
+            if (IsButtonClicked(Registry, ExitToMenuButton.GetButtonEntity(), event))
+            {
+                Dispatcher.trigger<ButtonClickedEvent>();
                 Dispatcher.trigger<ReturnToMenuEvent>();
+            }
         }
         break;
     }
@@ -98,6 +103,7 @@ void PauseMenuGameState::Init(RenderWindow& window)
     ExitToMenuButton.Load(Registry, window, 3);
 
     Renderer.Init(window);
+    SoundSys.Init("");
     ConnectEvents();
 }
 
@@ -111,4 +117,5 @@ void PauseMenuGameState::Uninit()
     Registry.destroy(PauseText);
     ExitToMenuButton.Unload(Registry);
     DisconnectEvents();
+    SoundSys.Uninit();
 }

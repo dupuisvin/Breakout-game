@@ -2,6 +2,7 @@
   "background":"Assets/Graphics/Background/bg_grasslands.png",
   "paddle":"Assets/Graphics/Paddle/paddleRed.png",
   "ball":"Assets/Graphics/Ball/ballGrey.png",
+  "music":"Assets/Music/02 sawsquarenoise - Stage 1.mp3",
   "bricks":[
     {"x":32, "y":96, "color":"Assets/Graphics/Bricks/element_red_square_glossy.png"},
     {"x":64, "y":96, "color":"Assets/Graphics/Bricks/element_red_square_glossy.png"},

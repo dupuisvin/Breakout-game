@@ -3,6 +3,7 @@
 
 namespace Breakout
 {
+    //Event called when the ball hits the paddle
     struct BallHitPaddleEvent {};
 }
 

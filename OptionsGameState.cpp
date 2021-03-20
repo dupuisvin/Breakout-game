@@ -5,8 +5,8 @@
 using namespace SDLEngine;
 using namespace Breakout;
 
-OptionsGameState::OptionsGameState(entt::registry& reg, entt::dispatcher& dispatcher) :
-    GameState(reg, dispatcher)
+OptionsGameState::OptionsGameState(entt::dispatcher& dispatcher) :
+    GameState(dispatcher)
 {
 }
 

@@ -2,6 +2,7 @@
 #define M_GAME_STATE
 
 #include <entt/fwd.hpp>
+#include <entt/entity/registry.hpp>
 
 namespace SDLEngine
 {
@@ -12,8 +13,7 @@ namespace SDLEngine
     {
     public:
 
-        GameState(entt::registry& reg, entt::dispatcher& dispatcher) :
-            Registry(reg),
+        GameState(entt::dispatcher& dispatcher) :
             Dispatcher(dispatcher){}
 
         //Connect all the events to this state
@@ -36,7 +36,7 @@ namespace SDLEngine
 
     protected:
 
-        entt::registry& Registry;
+        entt::registry Registry;
         entt::dispatcher& Dispatcher;
 
     };

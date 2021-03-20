@@ -8,6 +8,7 @@
 
 namespace Breakout
 {
+    //Handles all the sound effects and music for a level
     class LevelSoundSystem : public SDLEngine::SoundSystem
     {
     public:
@@ -15,7 +16,11 @@ namespace Breakout
         LevelSoundSystem(entt::registry& reg, entt::dispatcher& dispatcher) :
             SoundSystem(reg, dispatcher){}
         ~LevelSoundSystem();
+
+        //Load all the sounds and connect all the events
         void Init(const std::string &levelMusic);
+
+        //Unload all the sounds and disconnect all the events
         void Uninit();
 
     private:

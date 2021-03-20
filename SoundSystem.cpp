@@ -16,6 +16,7 @@ void SoundSystem::PlaySound(entt::entity e)
 void SoundSystem::PlayMusic(entt::entity e)
 {
     const auto& music = Registry.get<Music>(e);
+    Mix_VolumeMusic(0.50 * MIX_MAX_VOLUME);
     Mix_PlayMusic(music.Data.get(), -1);
 }
 

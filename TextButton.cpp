@@ -22,6 +22,18 @@ int TextButton::GetTextFontSize(const std::string& text)
     return 12;
 }
 
+bool TextButton::IsPtInside(float x, float y, entt::registry& reg)
+{
+    const auto [pos, sprite] = reg.get<Position, Sprite>(ButtonEntity);
+    return CollisionUtils::IsInsideRect(
+        x,
+        y,
+        pos.Pos.x,
+        pos.Pos.y,
+        static_cast<float>(sprite.Rect.w),
+        static_cast<float>(sprite.Rect.h));
+}
+
 void TextButton::Load(entt::registry& registry, RenderWindow& window, int nStartLayer)
 {
     ButtonEntity = registry.create();

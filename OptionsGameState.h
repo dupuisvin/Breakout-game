@@ -16,7 +16,7 @@ namespace Breakout
     {
     public:
 
-        OptionsGameState(entt::registry& reg, entt::dispatcher& dispatcher);
+        OptionsGameState(entt::dispatcher& dispatcher);
 
         //Initialize the game state, loading all the textures, ...
         virtual void Init(SDLEngine::RenderWindow& window) override;

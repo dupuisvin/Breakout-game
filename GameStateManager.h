@@ -9,6 +9,7 @@
 
 namespace SDLEngine
 {
+    //Manages the different states of the game and how they are handled 
     class GameStateManager
     {
     public:
@@ -17,6 +18,7 @@ namespace SDLEngine
             Dispatcher(dispatch),
             Window(window){}
 
+        //Add a game state onto the current state stack
         void AddState(GameState* state)
         {
             if (!States.empty())
@@ -25,14 +27,17 @@ namespace SDLEngine
             state->Init(Window);
         }
 
+        //Remove all the game states
         void Clear() 
         { 
             while (!States.empty())
                 PopState();
         }
 
+        //Get the current game state (the top of the stack)
         GameState* GetCurrentState() const { return States.top(); }
 
+        //Remove the current game state and set the next top of the stack as the current game state
         void PopState()
         {
             States.top()->Uninit();

@@ -3,6 +3,7 @@
 
 namespace Breakout
 {
+    //Event called when a button is clicked/selected
     struct ButtonClickedEvent {};
 }
 

@@ -93,9 +93,6 @@
     <ClCompile Include="LevelSoundSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="MenuSoundSystem.h">
-      <Filter>Header Files\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="SoundSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
@@ -226,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="ButtonClickedEvent.h">
       <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSoundSystem.h">
+      <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

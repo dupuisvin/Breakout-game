@@ -104,6 +104,7 @@ namespace SDLEngine
             return contact;
         }
 
+        //Check for possible collision between two circles and return the contact between them (if there is one)
         static CollisionContact Collision(glm::vec2 c1Pos, CollisionCircle c1, glm::vec2 c2Pos, CollisionCircle c2)
         {
             CollisionContact contact;

@@ -3,6 +3,7 @@
 
 namespace Breakout
 {
+    //Event called when the bal hits a brick
     struct BallHitBrickEvent{};
 }
 

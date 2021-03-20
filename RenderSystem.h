@@ -24,8 +24,9 @@ namespace SDLEngine
 
     private:
 
-        void DrawDebugCollRect(const Position& pos, const CollisionAABB& coll, SDL_Renderer* renderer);
-        void DrawDebugCollCircle(const Position& pos, const CollisionCircle& coll, SDL_Renderer* renderer);
+        void ClearLayers(RenderWindow& w);
+        void RenderSpritesToLayers(entt::registry& reg, RenderWindow& w);
+        void RenderLayersToScreen(RenderWindow& w);
 
         struct TextureDeleter
         {

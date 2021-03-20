@@ -4,10 +4,7 @@
 namespace SDLEngine
 {
     //Event called when a request to close the game was called
-    struct QuitEvent
-    {
-
-    };
+    struct QuitEvent {};
 }
 
 

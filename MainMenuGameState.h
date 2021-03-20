@@ -21,7 +21,7 @@ namespace Breakout
     {
     public:
 
-        MainMenuGameState(entt::registry& reg, entt::dispatcher& dispatcher);
+        MainMenuGameState(entt::dispatcher& dispatcher);
 
         //Connect all the events to this state
         virtual void ConnectEvents() override;

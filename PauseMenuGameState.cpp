@@ -19,9 +19,9 @@ using namespace Breakout;
 static constexpr char DEFAULT_BACKGROUND_TEXTURE[] = "Assets/Graphics/Background/bg_grasslands.png";
 static constexpr char DEFAULT_FONT[] = "Assets/Fonts/Kenney_Rocket.ttf";
 
-PauseMenuGameState::PauseMenuGameState(entt::registry& reg, entt::dispatcher& dispatcher) :
-    GameState(reg, dispatcher),
-    SoundSys(reg, dispatcher),
+PauseMenuGameState::PauseMenuGameState(entt::dispatcher& dispatcher) :
+    GameState(dispatcher),
+    SoundSys(Registry, dispatcher),
     ExitToMenuButton("Exit to menu", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2)
 {
 }
@@ -56,26 +56,13 @@ void PauseMenuGameState::DisconnectEvents()
     Dispatcher.sink<KeyDownEvent>().disconnect<&PauseMenuGameState::HandleKeyboardEvent>(*this);
 }
 
-static bool IsButtonClicked(entt::registry &reg, entt::entity buttonEntity, const MouseButtonUpEvent& event)
-{
-    const auto [pos, sprite] = reg.get<Position, Sprite>(buttonEntity);
-    return CollisionUtils::IsInsideRect(
-        static_cast<float>(event.PosX),
-        static_cast<float>(event.PosY),
-        pos.Pos.x,
-        pos.Pos.y,
-        static_cast<float>(sprite.Rect.w),
-        static_cast<float>(sprite.Rect.h));
-}
-
-
 void PauseMenuGameState::HandleMouseButtonUp(const MouseButtonUpEvent& event)
 {
     switch (event.Button)
     {
     case SDL_BUTTON_LEFT:
         {
-            if (IsButtonClicked(Registry, ExitToMenuButton.GetButtonEntity(), event))
+            if (ExitToMenuButton.IsPtInside(event.PosX, event.PosY, Registry))
             {
                 Dispatcher.trigger<ButtonClickedEvent>();
                 Dispatcher.trigger<ReturnToMenuEvent>();

@@ -22,7 +22,7 @@ namespace Breakout
     {
     public:
 
-        LevelGameState(std::string levelPath, entt::registry& reg, entt::dispatcher& dispatcher);
+        LevelGameState(std::string levelPath, entt::dispatcher& dispatcher);
 
         //Connect all the events to this state
         virtual void ConnectEvents() override;
@@ -44,8 +44,13 @@ namespace Breakout
 
     private:
 
+        //Called when a brick from the level is destroyed
         void BrickDestroyed();
+
+        //Reset the ball and the paddle to their starting position
         void ResetBallPaddle();
+
+        //Handle the keyboard events
         void HandleKeyboardEvents(const SDLEngine::KeyDownEvent &event);
 
         std::string LevelAssetPath;

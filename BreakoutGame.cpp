@@ -9,10 +9,12 @@ using namespace Breakout;
 
 BreakoutGame::BreakoutGame() :
     GameSDL("Breakout Clone"),
-    MainMenuState(Registry, Dispatcher),
-    PauseState(Registry, Dispatcher),
-    Level1State("Assets/Levels/Level1.json", Registry, Dispatcher),
-    Level2State("Assets/Levels/Level2.json", Registry, Dispatcher)
+    MainMenuState(Dispatcher),
+    PauseState(Dispatcher),
+    Level1State("Assets/Levels/Level1.json", Dispatcher),
+    Level2State("Assets/Levels/Level2.json", Dispatcher),
+    Level3State("Assets/Levels/Level3.json", Dispatcher),
+    Level4State("Assets/Levels/Level4.json", Dispatcher)
 {
     Dispatcher.sink<StartGameEvent>().connect<&BreakoutGame::StartGame>(this);
     Dispatcher.sink<LevelDoneEvent>().connect<&BreakoutGame::NextLevel>(this);
@@ -23,13 +25,14 @@ BreakoutGame::BreakoutGame() :
 
     Levels[0] = &Level1State;
     Levels[1] = &Level2State;
+    Levels[2] = &Level3State;
+    Levels[3] = &Level4State;
 }
 
 void BreakoutGame::StartGame()
 {
     StepTimer.Start();
     CurrentLevel = 0;
-    StateManager.PopState();
     StateManager.AddState(&Level1State);
 }
 
@@ -43,7 +46,8 @@ void BreakoutGame::NextLevel()
     }
     else
     {
-        //End game screen and then back to main menu
+        //@todo End game screen and then back to main menu
+        ReturnToMenu(); //@temp
     }
 }
 

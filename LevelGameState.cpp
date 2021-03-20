@@ -17,10 +17,10 @@
 using namespace SDLEngine;
 using namespace Breakout;
 
-LevelGameState::LevelGameState(std::string levelPath, entt::registry& reg, entt::dispatcher& dispatcher) :
-    GameState(reg, dispatcher),
+LevelGameState::LevelGameState(std::string levelPath, entt::dispatcher& dispatcher) :
+    GameState(dispatcher),
     LevelAssetPath(levelPath),
-    SoundSys(reg, dispatcher)
+    SoundSys(Registry, dispatcher)
 {
 }
 
@@ -71,7 +71,7 @@ void LevelGameState::HandleKeyboardEvents(const KeyDownEvent& event)
     case SDLK_p:
         {
             auto brickView = Registry.view<Brick, Active>();
-            if (!brickView.empty())
+            if (BrickCount > 0)
             {
                 Registry.remove<Active>(brickView.front());
                 Dispatcher.trigger<BrickDestroyedEvent>();

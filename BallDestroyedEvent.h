@@ -3,6 +3,7 @@
 
 namespace Breakout
 {
+    //Event called when the ball is destroyed (generally by hitting the bottom of the screen)
     struct BallDestroyedEvent {};
 }
 

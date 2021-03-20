@@ -5,6 +5,7 @@
 
 namespace Breakout
 {
+    //Contains all the collision objects for the paddle (an AABB in the center and a circle on each side)
     struct PaddleCollisionObj
     {
         PaddleCollisionObj() = default;

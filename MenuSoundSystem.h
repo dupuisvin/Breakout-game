@@ -8,13 +8,18 @@
 
 namespace Breakout
 {
+    //Handles all the sound effects and the music for the different menus
     class MenuSoundSystem : public SDLEngine::SoundSystem
     {
     public:
 
         MenuSoundSystem(entt::registry& reg, entt::dispatcher& dispatcher) :
             SoundSystem(reg, dispatcher) {}
-        void Init(const std::string &musicPath);
+
+        //Load all the sounds and connect all the events
+        void Init(const std::string& musicPath);
+
+        //Unload all the sounds and disconnect all the events
         void Uninit();
 
     private:
@@ -24,10 +29,10 @@ namespace Breakout
         void PlayMouseClickSound() { PlaySound(MouseClickSound); }
         void PlayMouseReleasekSound() { PlaySound(MouseReleaseSound); }
 
-        entt::entity MouseClickSound   = entt::null;
+        entt::entity MouseClickSound = entt::null;
         entt::entity MouseReleaseSound = entt::null;
-        entt::entity ButtonClickSound  = entt::null;
-        entt::entity MenuMusic         = entt::null;
+        entt::entity ButtonClickSound = entt::null;
+        entt::entity MenuMusic = entt::null;
         bool MusicPaused = false;
 
     };

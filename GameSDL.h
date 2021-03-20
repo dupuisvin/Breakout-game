@@ -27,7 +27,6 @@ namespace SDLEngine
 	protected:
 
 		GameStateManager StateManager;
-		entt::registry Registry;
 		entt::dispatcher Dispatcher;
 		RenderWindow Window;
 		RenderSystem RenderSys;

@@ -31,9 +31,11 @@ namespace Breakout
         MainMenuGameState MainMenuState;
         LevelGameState Level1State;
         LevelGameState Level2State;
+        LevelGameState Level3State;
+        LevelGameState Level4State;
         PauseMenuGameState PauseState;
         uint32_t CurrentLevel = 0;
-        std::array<SDLEngine::GameState*, 2> Levels;
+        std::array<SDLEngine::GameState*, 4> Levels;
 
     };
 }

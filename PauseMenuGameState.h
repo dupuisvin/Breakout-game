@@ -21,7 +21,7 @@ namespace Breakout
     {
     public:
 
-        PauseMenuGameState(entt::registry& reg, entt::dispatcher& dispatcher);
+        PauseMenuGameState(entt::dispatcher& dispatcher);
 
         //Connect all the events to this state
         virtual void ConnectEvents() override;

@@ -162,7 +162,6 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
     <ClCompile Include="LevelGameState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="MenuSoundSystem.cpp" />
-    <ClCompile Include="MenuSoundSystem.h" />
     <ClCompile Include="MoveSystem.cpp" />
     <ClCompile Include="OptionsGameState.cpp" />
     <ClCompile Include="PauseMenuGameState.cpp" />
@@ -193,6 +192,7 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
     <ClInclude Include="GameStatesEvents.h" />
     <ClInclude Include="LevelGameState.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="MenuSoundSystem.h" />
     <ClInclude Include="MoveSystem.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="OptionsGameState.h" />

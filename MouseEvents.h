@@ -6,37 +6,37 @@ namespace SDLEngine
     //Event called when the mouse is moved
     struct MouseMoveEvent
     {
-        MouseMoveEvent(int x, int y) :
+        MouseMoveEvent(float x, float y) :
             PosX(x),
             PosY(y) {}
 
-        int PosX = -1;
-        int PosY = -1;
+        float PosX = 0.0f;
+        float PosY = 0.0f;
     };
 
     //Event called when a mouse button is pressed
     struct MouseButtonDownEvent
     {
-        MouseButtonDownEvent(int x, int y, int button) :
+        MouseButtonDownEvent(float x, float y, int button) :
             PosX(x),
             PosY(y),
             Button(button){}
 
-        int PosX = -1;
-        int PosY = -1;
+        float PosX = 0.0f;
+        float PosY = 0.0f;
         int Button = -1;
     };
 
     //Event called when a mouse button is released
     struct MouseButtonUpEvent
     {
-        MouseButtonUpEvent(int x, int y, int button) :
+        MouseButtonUpEvent(float x, float y, int button) :
             PosX(x),
             PosY(y),
             Button(button) {}
 
-        int PosX = -1;
-        int PosY = -1;
+        float PosX = 0.0f;
+        float PosY = 0.0f;
         int Button = -1;
     };
 }

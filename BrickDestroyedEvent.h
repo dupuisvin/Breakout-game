@@ -3,9 +3,8 @@
 
 namespace Breakout
 {
-    struct BrickDestroyedEvent
-    {
-    };
+    //Event called when a brick is destroyed
+    struct BrickDestroyedEvent{ };
 }
 
 #endif // !M_BRICK_DESTROYED_EVENT

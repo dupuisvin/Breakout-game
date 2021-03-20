@@ -57,7 +57,7 @@ void MenuSoundSystem::Uninit()
     Dispatcher.sink<MouseButtonDownEvent>().disconnect<&MenuSoundSystem::PlayMouseClickSound>(this);
     Dispatcher.sink<MouseButtonUpEvent>().disconnect<&MenuSoundSystem::PlayMouseReleasekSound>(this);
     Dispatcher.sink<ButtonClickedEvent>().disconnect<&MenuSoundSystem::PlayButtonClickSound>(this);
-
+    
     Registry.destroy(MouseClickSound);
     Registry.destroy(MouseReleaseSound);
     Registry.destroy(ButtonClickSound);

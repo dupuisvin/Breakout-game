@@ -19,9 +19,9 @@ static constexpr char DEFAULT_BACKGROUND_TEXTURE[] = "Assets/Graphics/Background
 static constexpr char DEFAULT_FONT[] = "Assets/Fonts/Kenney_Rocket.ttf";
 static constexpr char MENU_MUSIC[] = "Assets/Music/01 sawsquarenoise - Tittle Screen.mp3";
 
-MainMenuGameState::MainMenuGameState(entt::registry& reg, entt::dispatcher& dispatcher) :
-    GameState(reg, dispatcher),
-    SoundSys(reg, dispatcher),
+MainMenuGameState::MainMenuGameState(entt::dispatcher& dispatcher) :
+    GameState(dispatcher),
+    SoundSys(Registry, dispatcher),
     StartButton("Start", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2),
     OptionsButton("Options", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 60),
     ExitButton("Exit", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 120)
@@ -62,18 +62,6 @@ void MainMenuGameState::DisconnectEvents()
     Dispatcher.sink<MouseButtonUpEvent>().disconnect<&MainMenuGameState::HandleMouseButtonUp>(*this);
 }
 
-static bool IsButtonClicked(entt::registry &reg, entt::entity buttonEntity, const MouseButtonUpEvent& event)
-{
-    const auto [pos, sprite] = reg.get<Position, Sprite>(buttonEntity);
-    return CollisionUtils::IsInsideRect(
-        static_cast<float>(event.PosX),
-        static_cast<float>(event.PosY),
-        pos.Pos.x,
-        pos.Pos.y,
-        static_cast<float>(sprite.Rect.w),
-        static_cast<float>(sprite.Rect.h));
-}
-
 
 void MainMenuGameState::HandleMouseButtonUp(const MouseButtonUpEvent& event)
 {
@@ -81,18 +69,18 @@ void MainMenuGameState::HandleMouseButtonUp(const MouseButtonUpEvent& event)
     {
     case SDL_BUTTON_LEFT:
         {
-            if(IsButtonClicked(Registry, StartButton.GetButtonEntity(), event))
+            if(StartButton.IsPtInside(event.PosX, event.PosY, Registry))
             {
                 printf("Start Clicked\n");
                 Dispatcher.trigger<ButtonClickedEvent>();
                 Dispatcher.trigger<StartGameEvent>();
             }
-            else if (IsButtonClicked(Registry, OptionsButton.GetButtonEntity(), event))
+            else if (OptionsButton.IsPtInside(event.PosX, event.PosY, Registry))
             {
                 printf("Options clicked\n");
                 Dispatcher.trigger<ButtonClickedEvent>();
             }
-            else if (IsButtonClicked(Registry, ExitButton.GetButtonEntity(), event))
+            else if (ExitButton.IsPtInside(event.PosX, event.PosY, Registry))
             {
                 printf("Exit clicked\n");
                 Dispatcher.trigger<ButtonClickedEvent>();

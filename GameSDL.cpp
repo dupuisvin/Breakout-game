@@ -51,7 +51,6 @@ GameSDL::GameSDL(const std::string &windowName) :
 
 GameSDL::~GameSDL()
 {
-	Registry.clear();
 	Mix_Quit();
 	TTF_Quit();
 	IMG_Quit();
@@ -70,21 +69,21 @@ void GameSDL::EventHandling()
 			{
 				int mouseX, mouseY;
 				SDL_GetMouseState(&mouseX, &mouseY);
-				Dispatcher.trigger<MouseMoveEvent>(mouseX, mouseY);
+				Dispatcher.trigger<MouseMoveEvent>(static_cast<float>(mouseX), static_cast<float>(mouseY));
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			{
 				int mouseX, mouseY;
 				SDL_GetMouseState(&mouseX, &mouseY);
-				Dispatcher.trigger<MouseButtonDownEvent>(mouseX, mouseY, e.button.button);
+				Dispatcher.trigger<MouseButtonDownEvent>(static_cast<float>(mouseX), static_cast<float>(mouseY), e.button.button);
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
 			{
 				int mouseX, mouseY;
 				SDL_GetMouseState(&mouseX, &mouseY);
-				Dispatcher.trigger<MouseButtonUpEvent>(mouseX, mouseY, e.button.button);
+				Dispatcher.trigger<MouseButtonUpEvent>(static_cast<float>(mouseX), static_cast<float>(mouseY), e.button.button);
 			}
 			break;
 		case SDL_KEYDOWN:

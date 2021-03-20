@@ -10,6 +10,7 @@ namespace Breakout
     {
     public:
 
+        //Check for collisions between all the collision objects
         void Update(float nStep, entt::registry& reg, entt::dispatcher &dispatch);
 
     private:

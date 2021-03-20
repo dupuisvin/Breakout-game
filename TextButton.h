@@ -32,6 +32,9 @@ namespace SDLEngine
         //Unload the textures for this button
         void Unload(entt::registry& registry);
 
+        //Check if the specified coordinate is inside this text button
+        bool IsPtInside(float x, float y, entt::registry& reg);
+
     private:
 
         static const SDL_Color DEFAULT_FONT_COLOR ;

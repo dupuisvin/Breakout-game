@@ -3,6 +3,7 @@
 
 namespace Breakout
 {
+    //Event called when the ball hits a wall (except the bottom one)
     struct BallHitWallEvent {};
 }
 

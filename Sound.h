@@ -6,6 +6,7 @@
 
 namespace SDLEngine
 {
+    //Struct that contains a sound asset
     struct Sound
     {
     private:

@@ -7,6 +7,7 @@
 #include "MoveSystem.h"
 #include "CollisionSystem.h"
 #include "LevelSoundSystem.h"
+#include <entt/entity/entity.hpp>
 
 namespace SDLEngine
 {
@@ -44,17 +45,27 @@ namespace Breakout
 
     private:
 
+        static std::string GetLivesString(int lives)
+        {
+            return std::string(" : ") + std::to_string(lives);
+        }
+
         //Called when the ball is destroyed
         void BallDestroyed();
 
         //Called when a brick from the level is destroyed
         void BrickDestroyed();
 
+        //Build the player lives display
+        void BuildPlayerLives(SDLEngine::RenderWindow& w);
+
         //Reset the ball and the paddle to their starting position
         void ResetBallPaddle();
 
         //Handle the keyboard events
         void HandleKeyboardEvents(const SDLEngine::KeyDownEvent &event);
+
+        void UpdateLives(SDLEngine::RenderWindow& w);
 
         std::string LevelAssetPath;
         LevelBreakout LevelEntities;
@@ -63,6 +74,9 @@ namespace Breakout
         CollisionSystem CollisionSys;
         LevelSoundSystem SoundSys;
         size_t BrickCount = 0;
+        SDLEngine::RenderWindow* Window = nullptr;
+        entt::entity PlayerLivesIcon = entt::null;
+        entt::entity PlayerLivesText = entt::null;
 
     };
 }

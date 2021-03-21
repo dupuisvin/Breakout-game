@@ -3,6 +3,7 @@
 #include "RenderWindow.h"
 #include "Position.h"
 #include "Sprite.h"
+#include "TextureLoader.h"
 #include "KeyboardEvents.h"
 #include "MouseEvents.h"
 #include "CollisionUtils.h"
@@ -10,6 +11,7 @@
 #include "Brick.h"
 #include "BrickDestroyedEvent.h"
 #include "BallDestroyedEvent.h"
+#include "SpriteTransform.h"
 #include "Active.h"
 
 #include <iostream>//@temp
@@ -18,6 +20,10 @@
 
 using namespace SDLEngine;
 using namespace Breakout;
+
+static constexpr char DEFAULT_FONT[] = "Assets/Fonts/Kenney Future Square.ttf";
+static constexpr char LIVE_ICON[] = "Assets/Graphics/Paddle/hud_heartFull.png";
+static const SDL_Color LIVE_TEXT_COLOR = {25, 25, 25};
 
 LevelGameState::LevelGameState(std::string levelPath, entt::dispatcher& dispatcher) :
     GameState(dispatcher),
@@ -40,10 +46,40 @@ void LevelGameState::BallDestroyed()
     --player.Lives;
 
     std::cout << "Player Lives is " << player.Lives << "\n";
+    if(Window)
+        UpdateLives(*Window);
+
     if (player.Lives <= 0)
         Dispatcher.trigger<GameOverEvent>();
     else
         ResetBallPaddle();
+}
+
+void LevelGameState::BuildPlayerLives(RenderWindow &w)
+{
+    PlayerLivesIcon = Registry.create();
+    Registry.emplace<Sprite>(PlayerLivesIcon, TextureLoader::LoadFromFile(w.GetRenderer(), LIVE_ICON, 1));
+    Registry.emplace<Position>(PlayerLivesIcon, 5.0f, 5.0f);
+    Registry.emplace<SpriteTransform>(PlayerLivesIcon, SpriteTransform::BuildFromScale(0.5f, 0.5f));
+    Registry.emplace<Active>(PlayerLivesIcon);
+
+    UpdateLives(w);
+}
+
+void LevelGameState::UpdateLives(RenderWindow& w)
+{
+    auto& player = Registry.get<Player>(LevelEntities.PaddleEntity);
+
+    if (PlayerLivesText == entt::null)
+    {
+        PlayerLivesText = Registry.create();
+        Registry.emplace<Position>(PlayerLivesText, 30.0f, 5.0f);
+        Registry.emplace<Active>(PlayerLivesText);
+        Registry.emplace<Sprite>(PlayerLivesText, TextureLoader::LoadFromText(w.GetRenderer(), GetLivesString(player.Lives), DEFAULT_FONT, 20, LIVE_TEXT_COLOR, 1));
+    }
+    else 
+        Registry.replace<Sprite>(PlayerLivesText, TextureLoader::LoadFromText(w.GetRenderer(), GetLivesString(player.Lives), DEFAULT_FONT, 20, LIVE_TEXT_COLOR, 1));
+    
 }
 
 void LevelGameState::ConnectEvents()
@@ -97,11 +133,14 @@ void LevelGameState::HandleKeyboardEvents(const KeyDownEvent& event)
 
 void LevelGameState::Init(RenderWindow& window)
 {
+    Window = &window;
     LevelEntities = LevelLoader::LoadLevel(LevelAssetPath, Registry, window.GetRenderer());
     BrickCount = LevelEntities.BricksEntities.size();
 
     Renderer.Init(window);
     SoundSys.Init(LevelEntities.LevelMusicPath);
+
+    BuildPlayerLives(window);
 
     ResetBallPaddle();
 

@@ -2,6 +2,7 @@
 #include "RenderWindow.h"
 #include "Position.h"
 #include "Sprite.h"
+#include "SpriteTransform.h"
 #include "Active.h"
 
 #include <entt/entt.hpp>
@@ -128,9 +129,8 @@ void RenderSystem::RenderLayersToScreen(RenderWindow& w)
 
 void RenderSystem::RenderSpritesToLayers(entt::registry& reg, RenderWindow& w)
 {
-    //Draw each texture to its specified layer
-    auto view = reg.view<Sprite, Position, Active>();
-    view.each([&](const Sprite& sprite, const Position& pos)
+    auto basicView = reg.view<Sprite, Position, Active>(entt::exclude<SpriteTransform>);
+    basicView.each([&](const Sprite& sprite, const Position& pos)
         {
             auto scaleVec = w.GetScale();
             SDL_Rect srcQuad = { 0, 0, sprite.Rect.w, sprite.Rect.h };
@@ -141,6 +141,23 @@ void RenderSystem::RenderSpritesToLayers(entt::registry& reg, RenderWindow& w)
                 static_cast<int>(sprite.Rect.h * scaleVec.y) };
             SDL_SetRenderTarget(w.GetRenderer(), RenderLayers[sprite.Layer].get());
             SDL_RenderCopyEx(w.GetRenderer(), sprite.Texture.get(), &srcQuad, &dstQuad, 0.0, nullptr, SDL_FLIP_NONE);
+            SDL_SetTextureAlphaMod(sprite.Texture.get(), SDL_ALPHA_OPAQUE);
+        });
+
+    auto transformedView = reg.view<Sprite, Position, SpriteTransform, Active>();
+    transformedView.each([&](const Sprite& sprite, const Position& pos, const SpriteTransform &transfo)
+        {
+            SDL_Rect srcQuad = { 0, 0, sprite.Rect.w, sprite.Rect.h };
+
+            int newPosX = static_cast<int>(pos.Pos.x + transfo.Offset.x);
+            int newPosY = static_cast<int>(pos.Pos.y + transfo.Offset.y);
+            SDL_Rect dstQuad = {
+                static_cast<int>(newPosX),
+                static_cast<int>(newPosY),
+                static_cast<int>(sprite.Rect.w * transfo.Scaling.x),
+                static_cast<int>(sprite.Rect.h * transfo.Scaling.y) };
+            SDL_SetRenderTarget(w.GetRenderer(), RenderLayers[sprite.Layer].get());
+            SDL_RenderCopyEx(w.GetRenderer(), sprite.Texture.get(), &srcQuad, &dstQuad, transfo.RotAngle, &transfo.RotCenter, transfo.Flip);
             SDL_SetTextureAlphaMod(sprite.Texture.get(), SDL_ALPHA_OPAQUE);
         });
 }

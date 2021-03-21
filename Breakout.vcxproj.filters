@@ -233,5 +233,8 @@
     <ClInclude Include="GameOverGameState.h">
       <Filter>Header Files\GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteTransform.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

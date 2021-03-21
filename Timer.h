@@ -6,40 +6,64 @@
 namespace SDLEngine
 {
 	//Timer that can used to get the timestep between each frame
+	//based on https://gafferongames.com/post/fix_your_timestep/
 	class Timer
 	{
 	public:
 		
+		Timer(float step) :
+			TimeStep(step) {}
+
+		//Start the timer
 		void Start()
 		{
-			Started = true;
-			StartTicks = SDL_GetTicks();
+			Running = true;
+			CurrentTime = SDL_GetTicks() / 1000.f;
+			Accumulator = 0.0f;
 		}
 
+		//Stop the timer
 		void Stop()
 		{
-			Started = false;
-			StartTicks = 0;
+			Running = false;
 		}
 
+		//Advance the state of the timer
 		void Tick()
 		{
-			if (Started)
-				StartTicks = SDL_GetTicks();
+			if (Running)
+			{
+				float newTime = SDL_GetTicks() / 1000.f;
+				float frameTime = newTime - CurrentTime;
+				CurrentTime = newTime;
+				Accumulator += frameTime;
+			}
 		}
 
-		uint32_t GetTicks()
+		//Remove a timestep from the accumulator
+		void TickAccumulator()
 		{
-			uint32_t time = 0;
-			if (Started)
-				time = SDL_GetTicks() - StartTicks;
-			return time;
+			Accumulator -= TimeStep;
 		}
-		bool IsStarted() { return Started; }
+
+		//Return true if the accumulator contains at least one timestep
+		bool IsAccumulatorFull()
+		{
+			return Accumulator >= TimeStep;
+		}
+
+		//Get the time step for the current frame
+		float GetTimeStep() const { return TimeStep; }
+
+		//Return true if the time is running
+		bool IsRunning() { return Running; }
 
 	private:
-		uint32_t StartTicks = 0;
-		bool Started = false;
+
+		bool Running = false;
+		float CurrentTime = 0.0f;
+		float Accumulator = 0.0f;
+		float TimeStep = 0.0f;
 	};
 }
 

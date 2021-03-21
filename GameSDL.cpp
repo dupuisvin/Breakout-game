@@ -34,7 +34,8 @@ static int resizeEventWatch(void* data, SDL_Event* event)
 
 GameSDL::GameSDL(const std::string &windowName) :
 	Window(windowName),
-	StateManager(Dispatcher, Window)
+	StateManager(Dispatcher, Window),
+	StepTimer(0.016f)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == 0)
 	{
@@ -109,21 +110,25 @@ void GameSDL::Render(GameState &state)
 void GameSDL::Run()
 {	
 	Dispatcher.sink<QuitEvent>().connect<&GameSDL::Exit>(this);
-	StepTimer.Start();
 	GameState* currentState = nullptr;
+	StepTimer.Start();
+
 	while (!Quit)
 	{
 		EventHandling();
-		float timeStep = StepTimer.GetTicks() / 1000.f;
-		StepTimer.Tick();
+
 		auto state = StateManager.GetCurrentState();
-		if (state)
-		{
-			Update(*state, timeStep);
-			Render(*state);
-		}
-		else
+		if (!state)
 			throw std::runtime_error("Invalid game state");
+
+		StepTimer.Tick();
+		while (StepTimer.IsAccumulatorFull())
+		{
+			Update(*state, StepTimer.GetTimeStep());
+			StepTimer.TickAccumulator();
+		}
+		
+		Render(*state);
 	}
 }
 

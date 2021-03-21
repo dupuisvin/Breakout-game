@@ -12,6 +12,8 @@
 #include "BallDestroyedEvent.h"
 #include "Active.h"
 
+#include <iostream>//@temp
+
 #include <entt/entt.hpp>
 
 using namespace SDLEngine;
@@ -31,13 +33,26 @@ void LevelGameState::BrickDestroyed()
         Dispatcher.trigger<LevelDoneEvent>();
 }
 
+void LevelGameState::BallDestroyed()
+{
+    auto& player = Registry.get<Player>(LevelEntities.PaddleEntity);
+
+    --player.Lives;
+
+    std::cout << "Player Lives is " << player.Lives << "\n";
+    if (player.Lives <= 0)
+        Dispatcher.trigger<GameOverEvent>();
+    else
+        ResetBallPaddle();
+}
+
 void LevelGameState::ConnectEvents()
 {
     Dispatcher.sink<KeyDownEvent>().connect<&MoveSystem::OnKeyDown>(&MoveSys);
     Dispatcher.sink<KeyUpEvent>().connect<&MoveSystem::OnKeyUp>(&MoveSys);
     Dispatcher.sink<KeyDownEvent>().connect<&LevelGameState::HandleKeyboardEvents>(this);
     Dispatcher.sink<BrickDestroyedEvent>().connect<&LevelGameState::BrickDestroyed>(this);
-    Dispatcher.sink<BallDestroyedEvent>().connect<&LevelGameState::ResetBallPaddle>(this);
+    Dispatcher.sink<BallDestroyedEvent>().connect<&LevelGameState::BallDestroyed>(this);
 }
 
 void LevelGameState::DisconnectEvents()
@@ -46,7 +61,7 @@ void LevelGameState::DisconnectEvents()
     Dispatcher.sink<KeyUpEvent>().disconnect<&MoveSystem::OnKeyUp>(&MoveSys);
     Dispatcher.sink<KeyDownEvent>().disconnect<&LevelGameState::HandleKeyboardEvents>(this);
     Dispatcher.sink<BrickDestroyedEvent>().disconnect<&LevelGameState::BrickDestroyed>(this);
-    Dispatcher.sink<BallDestroyedEvent>().disconnect<&LevelGameState::ResetBallPaddle>(this);
+    Dispatcher.sink<BallDestroyedEvent>().disconnect<&LevelGameState::BallDestroyed>(this);
 }
 
 static bool IsButtonClicked(entt::registry& reg, entt::entity buttonEntity, const MouseButtonUpEvent& event)

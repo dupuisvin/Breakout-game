@@ -1,8 +1,10 @@
-#ifndef M_OPTIONS_GAME_STATE
-#define M_OPTIONS_GAME_STATE
+#ifndef M_GAME_OVER_GAME_STATE
+#define M_GAME_OVER_GAME_STATE
 
 #include "GameState.h"
 #include "RenderSystem.h"
+#include "SoundSystem.h"
+#include <entt/entity/entity.hpp>
 
 namespace SDLEngine
 {
@@ -11,12 +13,12 @@ namespace SDLEngine
 
 namespace Breakout
 {
-    //Represents the option menu of the game
-    class OptionsGameState : public SDLEngine::GameState
+    //Represents the game over screen
+    class GameOverGameState : public SDLEngine::GameState
     {
     public:
 
-        OptionsGameState(entt::dispatcher& dispatcher);
+        GameOverGameState(entt::dispatcher& dispatcher);
 
         //Connect all the events to this state
         virtual void ConnectEvents() override;
@@ -37,7 +39,16 @@ namespace Breakout
         virtual void Update(float nStep) override;
 
     private:
+
+        void BuildGameoverText(SDLEngine::RenderWindow& window);
+
+        SDLEngine::RenderSystem Renderer;
+        SDLEngine::SoundSystem SoundSys;
+        entt::entity GameoverText = entt::null;
+        entt::entity GameoverSound = entt::null;
+        static constexpr float ScreenDuration = 3; //3 seconds
+        float ScreenActiveTime = 0.0f;
     };
 }
 
-#endif // !#define M_OPTIONS_GAME_STATE
+#endif // !#define M_GAME_OVER_GAME_STATE

@@ -15,6 +15,7 @@ namespace Breakout
         };
 
         Direction Dir = Direction::Idle;
+        int Lives = 3;
     };
 }
 

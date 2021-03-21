@@ -44,6 +44,9 @@ namespace Breakout
 
     private:
 
+        //Called when the ball is destroyed
+        void BallDestroyed();
+
         //Called when a brick from the level is destroyed
         void BrickDestroyed();
 

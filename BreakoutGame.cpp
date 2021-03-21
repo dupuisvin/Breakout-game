@@ -11,6 +11,7 @@ BreakoutGame::BreakoutGame() :
     GameSDL("Breakout Clone"),
     MainMenuState(Dispatcher),
     PauseState(Dispatcher),
+    GameOverState(Dispatcher),
     Level1State("Assets/Levels/Level1.json", Dispatcher),
     Level2State("Assets/Levels/Level2.json", Dispatcher),
     Level3State("Assets/Levels/Level3.json", Dispatcher),
@@ -21,12 +22,19 @@ BreakoutGame::BreakoutGame() :
     Dispatcher.sink<PauseEvent>().connect<&BreakoutGame::PauseMenuOpened>(this);
     Dispatcher.sink<UnpauseEvent>().connect<&BreakoutGame::PauseMenuClosed>(this);
     Dispatcher.sink<ReturnToMenuEvent>().connect<&BreakoutGame::ReturnToMenu>(this);
+    Dispatcher.sink<GameOverEvent>().connect<&BreakoutGame::GameOver>(this);
     StateManager.AddState(&MainMenuState);
 
     Levels[0] = &Level1State;
     Levels[1] = &Level2State;
     Levels[2] = &Level3State;
     Levels[3] = &Level4State;
+}
+
+void BreakoutGame::GameOver()
+{
+    StateManager.Clear();
+    StateManager.AddState(&GameOverState);
 }
 
 void BreakoutGame::StartGame()

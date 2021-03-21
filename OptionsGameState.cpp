@@ -10,6 +10,14 @@ OptionsGameState::OptionsGameState(entt::dispatcher& dispatcher) :
 {
 }
 
+void OptionsGameState::ConnectEvents()
+{
+}
+
+void OptionsGameState::DisconnectEvents()
+{
+}
+
 void OptionsGameState::Init(RenderWindow& window)
 {
 }

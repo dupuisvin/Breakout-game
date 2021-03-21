@@ -14,8 +14,6 @@ namespace SDLEngine
             Registry(reg),
             Dispatcher(dispatcher) {}
 
-    protected:
-
         //Play the sound associated with the specified entity
         void PlaySound(entt::entity e);
 
@@ -33,6 +31,8 @@ namespace SDLEngine
 
         //Return true if a music is currently playing
         bool IsMusicPlaying();
+
+    protected:
 
         entt::registry& Registry;
         entt::dispatcher& Dispatcher;

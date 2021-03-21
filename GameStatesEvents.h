@@ -17,6 +17,9 @@ namespace Breakout
 
     //Event called when the game is unpaused
     struct UnpauseEvent{};
+
+    //Event called when the player has no more lives
+    struct GameOverEvent {};
 }
 
 #endif // !M_GAME_STATE_EVENTS

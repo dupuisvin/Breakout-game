@@ -99,6 +99,9 @@
     <ClCompile Include="MenuSoundSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverGameState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Timer.h">
@@ -188,9 +191,6 @@
     <ClInclude Include="Active.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="GameStatesEvents.h">
-      <Filter>Header Files\GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="PauseMenuGameState.h">
       <Filter>Header Files\GameStates</Filter>
     </ClInclude>
@@ -226,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="MenuSoundSystem.h">
       <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatesEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverGameState.h">
+      <Filter>Header Files\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

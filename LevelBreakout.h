@@ -3,6 +3,8 @@
 
 #include <entt/entity/entity.hpp>
 #include <entt/entity/registry.hpp>
+#include "Sprite.h"
+#include "Brick.h"
 #include <vector>
 
 namespace Breakout
@@ -10,19 +12,16 @@ namespace Breakout
     //Struct that contains all the entities of a level
     struct LevelBreakout
     {
+        std::array<SDLEngine::Sprite, 6> BrickTextures;
         std::vector<entt::entity> BricksEntities;
         entt::entity BackgroundEntity;
         entt::entity PaddleEntity;
         entt::entity BallEntity;
         std::string LevelMusicPath;
 
-        //Unload the entities from the registry
-        void Unload(entt::registry& reg)
+        const SDLEngine::Sprite& GetBrickSprite(Brick::BrickType bType)
         {
-            reg.destroy(BackgroundEntity);
-            reg.destroy(PaddleEntity);
-            reg.destroy(BallEntity);
-            std::for_each(BricksEntities.begin(), BricksEntities.end(), [&](const auto& ent) { reg.destroy(ent); });
+            return BrickTextures[static_cast<int>(bType)];
         }
     };
 }

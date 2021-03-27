@@ -12,6 +12,7 @@ BreakoutGame::BreakoutGame() :
     MainMenuState(Dispatcher),
     PauseState(Dispatcher),
     GameOverState(Dispatcher),
+    LevelEditorState(Dispatcher),
     Level1State("Assets/Levels/Level1.json", Dispatcher),
     Level2State("Assets/Levels/Level2.json", Dispatcher),
     Level3State("Assets/Levels/Level3.json", Dispatcher),
@@ -23,6 +24,7 @@ BreakoutGame::BreakoutGame() :
     Dispatcher.sink<UnpauseEvent>().connect<&BreakoutGame::PauseMenuClosed>(this);
     Dispatcher.sink<ReturnToMenuEvent>().connect<&BreakoutGame::ReturnToMenu>(this);
     Dispatcher.sink<GameOverEvent>().connect<&BreakoutGame::GameOver>(this);
+    Dispatcher.sink<OpenEditorEvent>().connect<&BreakoutGame::OpenEditor>(this);
     StateManager.AddState(&MainMenuState);
 
     Levels[0] = &Level1State;
@@ -76,4 +78,10 @@ void BreakoutGame::ReturnToMenu()
     CurrentLevel = 0;
     StateManager.Clear();
     StateManager.AddState(&MainMenuState);
+}
+
+void BreakoutGame::OpenEditor()
+{
+    StateManager.Clear();
+    StateManager.AddState(&LevelEditorState);
 }

@@ -58,6 +58,15 @@ namespace SDLEngine
             return true;
         }
 
+        // Return true if the specified position (px,py) is inside the specified AABB
+        // pos     the position to validate
+        // collPos the AABB top left corner position
+        // coll    the AABB
+        static inline bool IsInsideRect(glm::vec2 pos, glm::vec2 collPos, const CollisionAABB &coll)
+        {
+            return IsInsideRect(pos.x, pos.y, collPos.x, collPos.y, coll.Width, coll.Height);
+        }
+
         //Check for possible collision between a circle and an AABB and return the contact between them (if there is one)
         static CollisionContact Collision(glm::vec2 circlerCorner, const CollisionCircle& circle, glm::vec2 rectCorner, const CollisionAABB& rect)
         {

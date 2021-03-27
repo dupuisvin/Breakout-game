@@ -102,6 +102,9 @@
     <ClCompile Include="GameOverGameState.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="LevelEditorGameState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Timer.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="SpriteTransform.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEditorGameState.h">
+      <Filter>Header Files\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

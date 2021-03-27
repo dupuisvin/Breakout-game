@@ -20,6 +20,9 @@ namespace Breakout
 
     //Event called when the player has no more lives
     struct GameOverEvent {};
+
+    //Event called when the level editor is opened
+    struct OpenEditorEvent {};
 }
 
 #endif // !M_GAME_STATE_EVENTS

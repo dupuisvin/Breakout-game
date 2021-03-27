@@ -5,6 +5,17 @@ namespace Breakout
 {
     struct Brick
     {
+        enum class BrickType
+        {
+            Blue = 0,
+            Green = 1,
+            Grey = 2,
+            Purple = 3,
+            Red = 4,
+            Yellow = 5
+        };
+
+        BrickType Type = BrickType::Blue;
     };
 }
 

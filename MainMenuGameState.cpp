@@ -24,7 +24,8 @@ MainMenuGameState::MainMenuGameState(entt::dispatcher& dispatcher) :
     SoundSys(Registry, dispatcher),
     StartButton("Start", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2),
     OptionsButton("Options", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 60),
-    ExitButton("Exit", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 120)
+    LevelEditorButton("Level Editor", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 120),
+    ExitButton("Exit", SDLEngine::RenderWindow::DEFAULT_SCREEN_WIDTH / 2, SDLEngine::RenderWindow::DEFAULT_SCREEN_HEIGHT / 2 + 180)
 {
 }
 
@@ -80,6 +81,12 @@ void MainMenuGameState::HandleMouseButtonUp(const MouseButtonUpEvent& event)
                 printf("Options clicked\n");
                 Dispatcher.trigger<ButtonClickedEvent>();
             }
+            else if (LevelEditorButton.IsPtInside(event.PosX, event.PosY, Registry))
+            {
+                printf("Level Editor clicked\n");
+                Dispatcher.trigger<ButtonClickedEvent>();
+                Dispatcher.trigger<OpenEditorEvent>();
+            }
             else if (ExitButton.IsPtInside(event.PosX, event.PosY, Registry))
             {
                 printf("Exit clicked\n");
@@ -100,6 +107,7 @@ void MainMenuGameState::Init(RenderWindow& window)
     BuildGameLogo(window);
     StartButton.Load(Registry, window, 1);
     OptionsButton.Load(Registry, window, 1);
+    LevelEditorButton.Load(Registry, window, 1);
     ExitButton.Load(Registry, window, 1);
 
     Renderer.Init(window);
@@ -120,6 +128,7 @@ void MainMenuGameState::Uninit()
 
     StartButton.Unload(Registry);
     OptionsButton.Unload(Registry);
+    LevelEditorButton.Unload(Registry);
     ExitButton.Unload(Registry);
 
     DisconnectEvents();

@@ -165,9 +165,9 @@ void LevelGameState::ResetBallPaddle()
 
 void LevelGameState::Uninit()
 {
-    LevelEntities.Unload(Registry);
     DisconnectEvents();
     SoundSys.Uninit();
+    Registry.clear();
 }
 
 void LevelGameState::Update(float nStep)

@@ -51,6 +51,7 @@ namespace Breakout
         MenuSoundSystem SoundSys;
         SDLEngine::TextButton StartButton;
         SDLEngine::TextButton OptionsButton;
+        SDLEngine::TextButton LevelEditorButton;
         SDLEngine::TextButton ExitButton;
         entt::entity Background;
         entt::entity BackgroundText;

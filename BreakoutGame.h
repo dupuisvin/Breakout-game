@@ -7,6 +7,7 @@
 #include "LevelGameState.h"
 #include "PauseMenuGameState.h"
 #include "GameOverGameState.h"
+#include "LevelEditorGameState.h"
 
 namespace SDLEngine
 {
@@ -26,6 +27,7 @@ namespace Breakout
         void GameOver();
         void StartGame();
         void NextLevel();
+        void OpenEditor();
         void PauseMenuOpened();
         void PauseMenuClosed();
         void ReturnToMenu();
@@ -37,6 +39,7 @@ namespace Breakout
         LevelGameState Level4State;
         PauseMenuGameState PauseState;
         GameOverGameState GameOverState;
+        LevelEditorGameState LevelEditorState;
         uint32_t CurrentLevel = 0;
         std::array<SDLEngine::GameState*, 4> Levels;
 

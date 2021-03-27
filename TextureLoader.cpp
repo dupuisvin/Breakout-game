@@ -18,10 +18,7 @@ Sprite TextureLoader::LoadFromFile(SDL_Renderer* renderer, const std::string &pa
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if (newTexture)
 		{
-			sprite.Rect.w = loadedSurface->w;
-			sprite.Rect.h = loadedSurface->h;
-			sprite.Texture.reset(newTexture);
-			sprite.Layer = layer;
+			sprite = Sprite(newTexture, SDL_Rect{ 0, 0, loadedSurface->w, loadedSurface->h }, layer);
 		}
 		else
 			throw std::runtime_error(SDL_GetError());
@@ -54,10 +51,7 @@ Sprite TextureLoader::LoadFromText(SDL_Renderer* renderer, const std::string& te
 			if (newTexture)
 			{
 				//Get image dimensions
-				sprite.Rect.w = textSurface->w;
-				sprite.Rect.h = textSurface->h;
-				sprite.Texture.reset(newTexture);
-				sprite.Layer = layer;
+				sprite = Sprite(newTexture, SDL_Rect{ 0, 0, textSurface->w, textSurface->h }, layer);
 			}
 			else
 				throw std::runtime_error(SDL_GetError());

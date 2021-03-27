@@ -8,6 +8,10 @@ namespace SDLEngine
     struct CollisionAABB
     {
         CollisionAABB() = default;
+        CollisionAABB(float width, float height) :
+            Width(width),
+            Height(height),
+            PosOffset{0.0f, 0.0f} {}
         CollisionAABB(float width, float height, glm::vec2 off) :
             Width(width),
             Height(height),

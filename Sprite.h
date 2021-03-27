@@ -1,6 +1,7 @@
 #ifndef M_SPRITE
 #define M_SPRITE
 
+#include <SDL.h>
 #include <SDL_rect.h>
 #include <SDL_render.h>
 #include <SDL_image.h>
@@ -13,19 +14,19 @@ namespace SDLEngine
     private:
         
         //Deleter to remove the texture properly
-        struct TextureDeleter
+        static void DeleteTexture(SDL_Texture* p)
         {
-            void operator()(SDL_Texture* p) { SDL_DestroyTexture(p); }
-        };
+            SDL_DestroyTexture(p);
+        }
 
     public:
 
         Sprite() = default;
         Sprite(SDL_Texture* pTexture, SDL_Rect r, uint32_t layer) :
-            Texture(pTexture),
+            Texture(pTexture, DeleteTexture),
             Rect(r),
-        Layer(layer){}
-        std::unique_ptr<SDL_Texture, TextureDeleter> Texture = nullptr;
+            Layer(layer){}
+        std::shared_ptr<SDL_Texture> Texture = nullptr;
         SDL_Rect Rect{};
         uint32_t Layer = 0;
 

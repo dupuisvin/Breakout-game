@@ -41,7 +41,6 @@ void MoveSystem::OnKeyUp(const KeyUpEvent& event)
 
 void MoveSystem::Update(float nStep, entt::registry& reg)
 {
-    glm::vec2 paddlePos;
     auto playerView = reg.view<Player, Position, Sprite>();
     playerView.each([&](auto& player, auto& pos, auto &sprite)
         {
@@ -60,8 +59,6 @@ void MoveSystem::Update(float nStep, entt::registry& reg)
                 pos.Pos.x = 0.0f;
             if (pos.Pos.x >= RenderWindow::DEFAULT_SCREEN_WIDTH - (float)sprite.Rect.w)
                 pos.Pos.x = RenderWindow::DEFAULT_SCREEN_WIDTH - (float)sprite.Rect.w;
-
-            paddlePos = pos.Pos;
         });
 
     auto ballView = reg.view<Ball, Position, Sprite>();
@@ -72,6 +69,6 @@ void MoveSystem::Update(float nStep, entt::registry& reg)
                 ball.Vel = glm::vec2(Ball::DEFAULT_VELOCITY_X, Ball::DEFAULT_VELOCITY_Y);
                 StartBall = false;
             }
-            pos.Pos += glm::vec2(nStep, nStep)*ball.Vel;
+            pos.Pos += glm::vec2(nStep, nStep) * ball.Vel;
         });
 }

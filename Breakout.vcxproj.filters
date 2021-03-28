@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Entities">
       <UniqueIdentifier>{ce7fd9f5-ec02-440b-9933-33a4aeff12b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{1bcac090-e55b-41b0-b7a8-4c9144dd70af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="LevelEditorGameState.h">
       <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Interpolations.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

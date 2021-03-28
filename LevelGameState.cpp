@@ -160,7 +160,7 @@ void LevelGameState::ResetBallPaddle()
 
     //Set ball position to starting position
     auto [ballPos, ballSprite] = Registry.get<Position, Sprite>(LevelEntities.BallEntity);
-    ballPos.Pos = { (RenderWindow::DEFAULT_SCREEN_WIDTH - ballSprite.Rect.w) / 2, paddlePos.Pos.y - ballSprite.Rect.h };
+    ballPos.Pos = { (RenderWindow::DEFAULT_SCREEN_WIDTH - ballSprite.Rect.w) / 2, paddlePos.Pos.y - (ballSprite.Rect.h+2) };
 }
 
 void LevelGameState::Uninit()
@@ -168,6 +168,8 @@ void LevelGameState::Uninit()
     DisconnectEvents();
     SoundSys.Uninit();
     Registry.clear();
+    PlayerLivesText = entt::null;
+    PlayerLivesIcon = entt::null;
 }
 
 void LevelGameState::Update(float nStep)

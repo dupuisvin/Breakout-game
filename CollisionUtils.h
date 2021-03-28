@@ -98,16 +98,8 @@ namespace SDLEngine
                     nOffY = nBottom;
 
                 contact.Collision = true;
-                if (std::abs(nOffX) < std::abs(nOffY))
-                {
-                    contact.CollVec.x = nOffX;
-                    contact.CollVec.y = 0.0f;
-                }
-                else
-                {
-                    contact.CollVec.x = 0.0f;
-                    contact.CollVec.y = nOffY;
-                }
+                contact.CollVec = { nOffX, nOffY };
+                contact.CollVec *= glm::vec2(1.001, 1.001);
             }
 
             return contact;

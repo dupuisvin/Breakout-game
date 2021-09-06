@@ -167,6 +167,7 @@ void LevelGameState::Explosion(entt::entity source)
         const auto& brickPos = Registry.get<Position>(entity);
         if (glm::distance(brickPos.Pos, sourcePos.Pos) <= EXPLOSION_RADIUS && source != entity)
         {
+            Dispatcher.trigger<BrickExplosionEvent>(BrickExplosionEvent(entity));
             Dispatcher.trigger<BrickDestroyedEvent>(BrickDestroyedEvent(entity));
         }
     }

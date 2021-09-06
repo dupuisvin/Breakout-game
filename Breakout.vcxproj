@@ -18,6 +18,80 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\BreakoutGame.h" />
+    <ClInclude Include="src\Collisions\CollisionAABB.h" />
+    <ClInclude Include="src\Collisions\CollisionCircle.h" />
+    <ClInclude Include="src\Collisions\CollisionContact.h" />
+    <ClInclude Include="src\Collisions\CollisionUtils.h" />
+    <ClInclude Include="src\Collisions\PaddleCollisionObj.h" />
+    <ClInclude Include="src\Components\Active.h" />
+    <ClInclude Include="src\Components\Ball.h" />
+    <ClInclude Include="src\Components\Brick.h" />
+    <ClInclude Include="src\Components\Music.h" />
+    <ClInclude Include="src\Components\Player.h" />
+    <ClInclude Include="src\Components\Position.h" />
+    <ClInclude Include="src\Components\Sound.h" />
+    <ClInclude Include="src\Components\Sprite.h" />
+    <ClInclude Include="src\Components\SpriteTransform.h" />
+    <ClInclude Include="src\Components\Velocity.h" />
+    <ClInclude Include="src\Entities\TextButton.h" />
+    <ClInclude Include="src\Events\BallDestroyedEvent.h" />
+    <ClInclude Include="src\Events\BallHitBrickEvent.h" />
+    <ClInclude Include="src\Events\BallHitPaddleEvent.h" />
+    <ClInclude Include="src\Events\BallHitWallEvent.h" />
+    <ClInclude Include="src\Events\BrickDestroyedEvent.h" />
+    <ClInclude Include="src\Events\BrickExplosionEvent.h" />
+    <ClInclude Include="src\Events\ButtonClickedEvent.h" />
+    <ClInclude Include="src\Events\GameStatesEvents.h" />
+    <ClInclude Include="src\Events\KeyboardEvents.h" />
+    <ClInclude Include="src\Events\LaunchBallEvent.h" />
+    <ClInclude Include="src\Events\MouseEvents.h" />
+    <ClInclude Include="src\Events\QuitEvent.h" />
+    <ClInclude Include="src\GameSDL.h" />
+    <ClInclude Include="src\GameStates\GameOverGameState.h" />
+    <ClInclude Include="src\GameStates\GameState.h" />
+    <ClInclude Include="src\GameStates\GameStateManager.h" />
+    <ClInclude Include="src\GameStates\LevelEditorGameState.h" />
+    <ClInclude Include="src\GameStates\LevelGameState.h" />
+    <ClInclude Include="src\GameStates\MainMenuGameState.h" />
+    <ClInclude Include="src\GameStates\OptionsGameState.h" />
+    <ClInclude Include="src\GameStates\PauseMenuGameState.h" />
+    <ClInclude Include="src\LevelBreakout.h" />
+    <ClInclude Include="src\LevelLoader.h" />
+    <ClInclude Include="src\RenderWindow.h" />
+    <ClInclude Include="src\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\Systems\LevelSoundSystem.h" />
+    <ClInclude Include="src\Systems\MenuSoundSystem.h" />
+    <ClInclude Include="src\Systems\MoveSystem.h" />
+    <ClInclude Include="src\Systems\RenderSystem.h" />
+    <ClInclude Include="src\Systems\SoundSystem.h" />
+    <ClInclude Include="src\TextureLoader.h" />
+    <ClInclude Include="src\Utils\ElapsedTimer.h" />
+    <ClInclude Include="src\Utils\Interpolations.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\BreakoutGame.cpp" />
+    <ClCompile Include="src\Entities\TextButton.cpp" />
+    <ClCompile Include="src\GameSDL.cpp" />
+    <ClCompile Include="src\GameStates\GameOverGameState.cpp" />
+    <ClCompile Include="src\GameStates\LevelEditorGameState.cpp" />
+    <ClCompile Include="src\GameStates\LevelGameState.cpp" />
+    <ClCompile Include="src\GameStates\MainMenuGameState.cpp" />
+    <ClCompile Include="src\GameStates\OptionsGameState.cpp" />
+    <ClCompile Include="src\GameStates\PauseMenuGameState.cpp" />
+    <ClCompile Include="src\LevelLoader.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\RenderWindow.cpp" />
+    <ClCompile Include="src\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="src\Systems\LevelSoundSystem.cpp" />
+    <ClCompile Include="src\Systems\MenuSoundSystem.cpp" />
+    <ClCompile Include="src\Systems\MoveSystem.cpp" />
+    <ClCompile Include="src\Systems\RenderSystem.cpp" />
+    <ClCompile Include="src\Systems\SoundSystem.cpp" />
+    <ClCompile Include="src\TextureLoader.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -116,7 +190,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>3rdParty\rapidjson\include;3rdParty\entt\include;3rdParty\GLFW\include;3rdParty\glm\include;3rdParty\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>3rdParty\rapidjson\include;3rdParty\entt\include;3rdParty\GLFW\include;3rdParty\glm\include;3rdParty\SDL\include;src;src\Collisions;src\Components;src\Entities;src\Events;src\GameStates;src\Systems;src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -138,7 +212,7 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>3rdParty\rapidjson\include;3rdParty\entt\include;3rdParty\GLFW\include;3rdParty\glm\include;3rdParty\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>3rdParty\rapidjson\include;3rdParty\entt\include;3rdParty\GLFW\include;3rdParty\glm\include;3rdParty\SDL\include;src;src\Collisions;src\Components;src\Entities;src\Events;src\GameStates;src\Systems;src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -154,80 +228,6 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
 xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="BallHitWallEvent.h" />
-    <ClCompile Include="BreakoutGame.cpp" />
-    <ClCompile Include="CollisionSystem.cpp" />
-    <ClCompile Include="GameOverGameState.cpp" />
-    <ClCompile Include="LevelBreakout.h" />
-    <ClCompile Include="LevelEditorGameState.cpp" />
-    <ClCompile Include="LevelGameState.cpp" />
-    <ClCompile Include="LevelLoader.cpp" />
-    <ClCompile Include="MenuSoundSystem.cpp" />
-    <ClCompile Include="MoveSystem.cpp" />
-    <ClCompile Include="OptionsGameState.cpp" />
-    <ClCompile Include="PauseMenuGameState.cpp" />
-    <ClCompile Include="LevelSoundSystem.cpp" />
-    <ClCompile Include="SoundSystem.cpp" />
-    <ClCompile Include="TextButton.cpp" />
-    <ClCompile Include="GameSDL.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainMenuGameState.cpp" />
-    <ClCompile Include="RenderSystem.cpp" />
-    <ClCompile Include="RenderWindow.cpp" />
-    <ClCompile Include="TextureLoader.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Active.h" />
-    <ClInclude Include="Ball.h" />
-    <ClInclude Include="BallDestroyedEvent.h" />
-    <ClInclude Include="BallHitBrickEvent.h" />
-    <ClInclude Include="BallHitPaddleEvent.h" />
-    <ClInclude Include="BreakoutGame.h" />
-    <ClInclude Include="Brick.h" />
-    <ClInclude Include="BrickDestroyedEvent.h" />
-    <ClInclude Include="BrickExplosionEvent.h" />
-    <ClInclude Include="ButtonClickedEvent.h" />
-    <ClInclude Include="CollisionAABB.h" />
-    <ClInclude Include="CollisionCircle.h" />
-    <ClInclude Include="CollisionContact.h" />
-    <ClInclude Include="CollisionSystem.h" />
-    <ClInclude Include="ElapsedTimer.h" />
-    <ClInclude Include="GameOverGameState.h" />
-    <ClInclude Include="GameStatesEvents.h" />
-    <ClInclude Include="Interpolations.h" />
-    <ClInclude Include="LaunchBallEvent.h" />
-    <ClInclude Include="LevelEditorGameState.h" />
-    <ClInclude Include="LevelGameState.h" />
-    <ClInclude Include="LevelLoader.h" />
-    <ClInclude Include="MenuSoundSystem.h" />
-    <ClInclude Include="MoveSystem.h" />
-    <ClInclude Include="Music.h" />
-    <ClInclude Include="OptionsGameState.h" />
-    <ClInclude Include="PaddleCollisionObj.h" />
-    <ClInclude Include="PauseMenuGameState.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="QuitEvent.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="LevelSoundSystem.h" />
-    <ClInclude Include="SoundSystem.h" />
-    <ClInclude Include="TextButton.h" />
-    <ClInclude Include="CollisionUtils.h" />
-    <ClInclude Include="GameSDL.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="KeyboardEvents.h" />
-    <ClInclude Include="MainMenuGameState.h" />
-    <ClInclude Include="MouseEvents.h" />
-    <ClInclude Include="Position.h" />
-    <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="RenderWindow.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="TextureLoader.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="SpriteTransform.h" />
-    <ClInclude Include="Velocity.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

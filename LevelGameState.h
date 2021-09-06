@@ -7,6 +7,7 @@
 #include "MoveSystem.h"
 #include "CollisionSystem.h"
 #include "LevelSoundSystem.h"
+#include "ElapsedTimer.h"
 #include <entt/entity/entity.hpp>
 
 namespace SDLEngine
@@ -14,10 +15,14 @@ namespace SDLEngine
     class RenderWindow;
     struct MouseButtonUpEvent;
     struct KeyDownEvent;
+    
 }
 
 namespace Breakout
 {
+    struct BallHitBrickEvent;
+    struct BrickDestroyedEvent;
+    
     //Represent a playable game level
     class LevelGameState : public SDLEngine::GameState
     {
@@ -53,17 +58,35 @@ namespace Breakout
         //Called when the ball is destroyed
         void BallDestroyed();
 
+        //Called when a brick from the level is hit
+        void BrickWasHit(const BallHitBrickEvent &event);
+
         //Called when a brick from the level is destroyed
-        void BrickDestroyed();
+        void BrickDestroyed(const BrickDestroyedEvent& event);
+
+        //Build the goal display
+        void BuildGoal(SDLEngine::RenderWindow& w);
 
         //Build the player lives display
         void BuildPlayerLives(SDLEngine::RenderWindow& w);
+
+        //Build the Power Up display
+        void BuildPowerUp(SDLEngine::RenderWindow& w);
+
+        //Called when an explosion is caused by a brick hit
+        void Explosion(entt::entity source);
 
         //Reset the ball and the paddle to their starting position
         void ResetBallPaddle();
 
         //Handle the keyboard events
         void HandleKeyboardEvents(const SDLEngine::KeyDownEvent &event);
+
+        //Switch the ball mode to the power up ball
+        void PowerUpBall(entt::entity ballEntity);
+
+        //Return the ball to normal
+        void RemovePowerUp(entt::entity ballEntity);
 
         void UpdateLives(SDLEngine::RenderWindow& w);
 
@@ -73,10 +96,14 @@ namespace Breakout
         MoveSystem MoveSys;
         CollisionSystem CollisionSys;
         LevelSoundSystem SoundSys;
-        size_t BrickCount = 0;
         SDLEngine::RenderWindow* Window = nullptr;
         entt::entity PlayerLivesIcon = entt::null;
         entt::entity PlayerLivesText = entt::null;
+        entt::entity PowerUpIcon = entt::null;
+        entt::entity PowerUpText = entt::null;
+        entt::entity GoalIcon = entt::null;
+        entt::entity GoalText = entt::null;
+        SDLEngine::ElapsedTimer BallTimer;
 
     };
 }

@@ -30,6 +30,7 @@ namespace Breakout
         void PlayBallHitWallSound() { PlaySound(BallHitWallSound); }
         void PlayBallDestroyedSound() { PlaySound(BallDestroyedSound); }
         void PlayBrickDestroyedSound() { PlaySound(BrickDestroyedSound); }
+        void PlayExplosionSound() { PlaySound(ExplosionSound); }
         void PlayLevelMusic() { PlaySound(LevelMusic); }
 
         entt::entity BallHitBrickSound   = entt::null;
@@ -37,6 +38,7 @@ namespace Breakout
         entt::entity BallHitWallSound    = entt::null;
         entt::entity BallDestroyedSound  = entt::null;
         entt::entity BrickDestroyedSound = entt::null;
+        entt::entity ExplosionSound      = entt::null;
         entt::entity LevelMusic          = entt::null;
     };
 }

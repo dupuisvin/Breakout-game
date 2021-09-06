@@ -7,9 +7,22 @@ namespace Breakout
 {
     struct Ball
     {
+        enum class BallMode
+        {
+            Normal,
+            Passtrough_Blue
+        };
+
         static constexpr float DEFAULT_VELOCITY_X = 320;
         static constexpr float DEFAULT_VELOCITY_Y = -320;
-        glm::vec2 Vel;
+        
+        BallMode Mode = BallMode::Normal;
+        
+        //Return true if the ball can collide with brick, false otherwise
+        bool CanCollideWithBricks() const
+        {
+            return Mode == BallMode::Normal;
+        }
     };
 }
 

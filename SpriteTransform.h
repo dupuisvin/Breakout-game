@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include <glm/vec2.hpp>
+#include "Interpolations.h"
 
 struct SpriteTransform
 {
@@ -25,6 +26,35 @@ struct SpriteTransform
         RotAngle(angle),
         RotCenter{ rotX, rotY },
         Flip(flip) {}
+
+    void Rotate(float angle)
+    {
+        RotAngle += angle;
+    }
+
+    void Translate(const glm::vec2& off)
+    {
+        Offset += off;
+    }
+
+    void Scale(const glm::vec2& scale)
+    {
+        Scaling *= scale;
+    }
+
+    SpriteTransform Interpolate(SpriteTransform& other, float t) const
+    {
+        SpriteTransform outTransfo;
+        outTransfo.Offset.x = SDLEngine::Lerp<float>(Offset.x, other.Offset.x, t);
+        outTransfo.Offset.y = SDLEngine::Lerp<float>(Offset.y, other.Offset.y, t);
+        outTransfo.Scaling.x = SDLEngine::Lerp<float>(Scaling.x, other.Scaling.x, t);
+        outTransfo.Scaling.y = SDLEngine::Lerp<float>(Scaling.y, other.Scaling.y, t);
+        outTransfo.RotAngle = SDLEngine::Lerp<double>(RotAngle, other.RotAngle, t);
+        if (Flip != other.Flip && t >= 0.5f)
+            outTransfo.Flip = other.Flip;
+        else
+            outTransfo.Flip = Flip;
+    }
 
     glm::vec2 Offset = { 0.0f, 0.0f };
     glm::vec2 Scaling = { 1.0f, 1.0f };

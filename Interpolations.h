@@ -20,7 +20,7 @@ namespace SDLEngine
 
 
     //Cubic Bezier through A,B,C,D where A(start) and D (end) are assumed to be 0 and 1
-    static float NormalziedBezier3(float B, float C, float t)
+    static float NormalizedBezier3(float B, float C, float t)
     {
         float s = 1.f - t;
         float t2 = t * t;
@@ -36,6 +36,11 @@ namespace SDLEngine
         out = func(out); //Easing/Tweening function on [0,1]
         out *= (outEnd - outStart); //[0, outRange]
         return out + outStart; //[outStart, outEnd]
+    }
+
+    template <class T> T Lerp(T v0, T v1, float t)
+    {
+        return (1 - t) * v0 + t * v1;
     }
 }
 

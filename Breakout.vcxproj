@@ -186,14 +186,17 @@ xcopy /y "$(ProjectDir)3rdParty\SDL\lib\*.dll" "$(OutputPath)"</Command>
     <ClInclude Include="BreakoutGame.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickDestroyedEvent.h" />
+    <ClInclude Include="BrickExplosionEvent.h" />
     <ClInclude Include="ButtonClickedEvent.h" />
     <ClInclude Include="CollisionAABB.h" />
     <ClInclude Include="CollisionCircle.h" />
     <ClInclude Include="CollisionContact.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="ElapsedTimer.h" />
     <ClInclude Include="GameOverGameState.h" />
     <ClInclude Include="GameStatesEvents.h" />
     <ClInclude Include="Interpolations.h" />
+    <ClInclude Include="LaunchBallEvent.h" />
     <ClInclude Include="LevelEditorGameState.h" />
     <ClInclude Include="LevelGameState.h" />
     <ClInclude Include="LevelLoader.h" />

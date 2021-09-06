@@ -18,6 +18,9 @@ namespace Breakout
         entt::entity PaddleEntity;
         entt::entity BallEntity;
         std::string LevelMusicPath;
+        SDLEngine::Sprite BallGraySprite;
+        SDLEngine::Sprite BallBlueSprite;
+        int BrickCount = 0;
 
         const SDLEngine::Sprite& GetBrickSprite(Brick::BrickType bType)
         {

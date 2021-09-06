@@ -11,8 +11,8 @@ namespace SDLEngine
     {
         Velocity() = default;
         Velocity(float dx, float dy) :
-            Dir(dx, dy) {}
-        vec2 Dir = vec2(0.0f, 0.0f);
+            Vel(dx, dy) {}
+        vec2 Vel = vec2(0.0f, 0.0f);
     };
 }
 

@@ -17,6 +17,12 @@ namespace Breakout
     {
     public:
 
+        MoveSystem(entt::registry& reg) :
+            Registry(reg){}
+
+        //Launch the ball
+        void LaunchBall();
+
         //Called when a keybord key is pressed down
         void OnKeyDown(const SDLEngine::KeyDownEvent& event);
 
@@ -24,12 +30,12 @@ namespace Breakout
         void OnKeyUp(const SDLEngine::KeyUpEvent& event);
 
         //Update the position of all the dynamic entities
-        void Update(float nStep, entt::registry& reg);
+        void Update(float nStep);
 
     private:
 
         Player::Direction PlayerDir = Player::Direction::Idle;
-        bool StartBall = false;
+        entt::registry &Registry;
     };
 }
 

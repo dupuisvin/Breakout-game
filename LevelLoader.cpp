@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Brick.h"
+#include "Velocity.h"
 #include "Active.h"
 #include "CollisionAABB.h"
 #include "CollisionCircle.h"
@@ -33,7 +34,8 @@ static constexpr char BRICK_COLOR[] = "color";
 static constexpr char MUSIC[]      = "music";
 
 static constexpr char PADDLE_ASSET[] = "Assets/Graphics/Paddle/paddleBlu.png";
-static constexpr char BALL_ASSET[] = "Assets/Graphics/Ball/ballGrey.png";
+static constexpr char BALL_GRAY_ASSET[] = "Assets/Graphics/Ball/ballGrey.png";
+static constexpr char BALL_BLUE_ASSET[] = "Assets/Graphics/Ball/ballBlue.png";
 
 void LevelLoader::LoadBrickSprites(LevelBreakout &level, SDL_Renderer* renderer)
 {
@@ -91,10 +93,12 @@ LevelBreakout LevelLoader::LoadLevel(std::string filename, entt::registry& reg, 
 
 			ret.BallEntity = reg.create();
 			reg.emplace<Position>(ret.BallEntity, 0.0f, 0.0f);
-			auto ballTexture = TextureLoader::LoadFromFile(renderer, BALL_ASSET, 1);
-			reg.emplace<CollisionCircle>(ret.BallEntity, ballTexture.Rect.w / 2.0f, glm::vec2(ballTexture.Rect.w / 2.0f, ballTexture.Rect.h / 2.0f));
-			reg.emplace<Sprite>(ret.BallEntity, std::move(ballTexture));
+			ret.BallGraySprite = TextureLoader::LoadFromFile(renderer, BALL_GRAY_ASSET, 1);
+			ret.BallBlueSprite = TextureLoader::LoadFromFile(renderer, BALL_BLUE_ASSET, 1);
+			reg.emplace<CollisionCircle>(ret.BallEntity, ret.BallGraySprite.Rect.w / 2.0f, glm::vec2(ret.BallGraySprite.Rect.w / 2.0f, ret.BallGraySprite.Rect.h / 2.0f));
+			reg.emplace<Sprite>(ret.BallEntity, ret.BallGraySprite);
 			reg.emplace<Ball>(ret.BallEntity);
+			reg.emplace<Velocity>(ret.BallEntity);
 			reg.emplace<Active>(ret.BallEntity);
 
 			const auto& music = doc[MUSIC];
@@ -111,10 +115,13 @@ LevelBreakout LevelLoader::LoadLevel(std::string filename, entt::registry& reg, 
 				auto brick = reg.create();
 				ret.BricksEntities.push_back(brick);
 				reg.emplace<Position>(brick, static_cast<float>(x->value.GetInt()), static_cast<float>(y->value.GetInt()));
-				auto brickTexture = ret.GetBrickSprite(Brick::BrickType(color->value.GetInt()));
+				Brick::BrickType bType{ color->value.GetInt() };
+				auto brickTexture = ret.GetBrickSprite(bType);
 				reg.emplace<CollisionAABB>(brick, static_cast<float>(brickTexture.Rect.w), static_cast<float>(brickTexture.Rect.h), glm::vec2());
 				reg.emplace<Sprite>(brick, std::move(brickTexture));
-				reg.emplace<Brick>(brick);
+				reg.emplace<Brick>(brick, bType);
+				if (bType == Brick::BrickType::Blue)
+					++ret.BrickCount;
 				reg.emplace<Active>(brick);
 			}
 		}

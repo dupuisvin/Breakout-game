@@ -248,5 +248,14 @@
     <ClInclude Include="Interpolations.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="LaunchBallEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ElapsedTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickExplosionEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

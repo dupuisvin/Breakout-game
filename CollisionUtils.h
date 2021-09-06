@@ -127,6 +127,14 @@ namespace SDLEngine
 
             return contact;
         }
+
+
+        //Check for possible collision between two AABB and return the contact between them (if there is one)
+        static bool IsCollision(glm::vec2 c1Pos, CollisionAABB c1, glm::vec2 c2Pos, CollisionAABB c2)
+        {
+            return ((c1Pos.x < c2Pos.x + c2.Width && c1Pos.x + c1.Width > c2Pos.x) &&
+                    (c1Pos.y < c2Pos.y + c2.Height && c1Pos.y + c1.Height > c2Pos.y));
+        }
     };
 }
 

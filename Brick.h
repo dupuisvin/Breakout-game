@@ -15,6 +15,9 @@ namespace Breakout
             Yellow = 5
         };
 
+        Brick(BrickType bType) :
+            Type(bType) {}
+
         BrickType Type = BrickType::Blue;
     };
 }

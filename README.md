@@ -1,6 +1,6 @@
 #Breakout clone
 
-![Main title screen](https://github.com/dupuisvin/Breakout-game/tree/master/docs/Mainscreen_screenshot.png "Main title screen")
+![Main title screen](docs/Mainscreen_screenshot.png?raw=true)
 
 ##Description
 
@@ -12,9 +12,9 @@ hit all the blue bricks with the ball without losing all 3 of your lives.
 
 ##Screenshots
 
-![Level 1 screenshot](https://github.com/dupuisvin/Breakout-game/tree/master/docs/Level1_screenshot.png "")
+![Level 1 screenshot](docs/Level1_screenshot.png?raw=true)
 
-![Level 4 screenshot](https://github.com/dupuisvin/Breakout-game/tree/master/docs/Level4_screenshot.png "")
+![Level 4 screenshot](docs/Level4_screenshot.png?raw=true)
 
 ##Todo
 
